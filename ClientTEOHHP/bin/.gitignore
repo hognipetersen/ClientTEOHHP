@@ -1,1 +1,6 @@
-/config/
+/logic/
+/Encryption.class
+/LogInObject.class
+/LogInReturnObject.class
+/SaveNoteObject.class
+/SaveNoteReturnObject.class
