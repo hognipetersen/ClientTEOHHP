@@ -61,10 +61,10 @@ public class SaveNoteLogic implements Serializable{
 //		   e.printStackTrace();  
 //		  }  
 
-	private void encryptSaveNoteObject(){
+	private byte[] encryptSaveNoteObject(){
 //		encryptedSaveNoteObject.encrypt(json);
 		System.out.println(encryptedSaveNoteObject.encrypt(json));
-		returnByteArray
+		encryptedSaveNoteObject.
 	}
 	
 	private void connectToServer() throws IOException{
