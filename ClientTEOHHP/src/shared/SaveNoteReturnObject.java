@@ -1,4 +1,4 @@
-package logic;
+package shared;
 
 import java.io.Serializable;
 
