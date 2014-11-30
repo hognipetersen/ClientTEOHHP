@@ -1,24 +1,29 @@
 package logic;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.IOException;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import javax.swing.JButton;
-import java.awt.Color;
-import javax.swing.SwingConstants;
-import javax.swing.JTextField;
-import javax.swing.JPasswordField;
+
+import com.google.gson.Gson;
+
+import shared.LogInObject;
+import shared.LogInReturnObject;
 
 public class Login extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textFieldUsername;
 	private JPasswordField passwordFieldPassword;
+	private String jsonIn;
 
+	private ConnectionsSocket connectionsSocket = new ConnectionsSocket();
+	private LogInObject loginObject = new LogInObject();
+	private Gson gson = new Gson();
+	private LogInReturnObject loginReturnObject = new LogInReturnObject();
+	
 	/**
 	 * Launch the application.
 	 */
@@ -35,6 +40,7 @@ public class Login extends JFrame {
 		});
 	}
 
+	JButton btnLogin = new JButton("Login");
 	/**
 	 * Create the frame.
 	 */
@@ -63,7 +69,7 @@ public class Login extends JFrame {
 		passwordFieldPassword.setBounds(91, 258, 137, 28);
 		contentPane.add(passwordFieldPassword);
 		
-		JButton btnLogin = new JButton("Login");
+		
 		btnLogin.setBounds(93, 401, 134, 28);
 		contentPane.add(btnLogin);
 		
@@ -76,5 +82,26 @@ public class Login extends JFrame {
 		lblEnterUsername.setHorizontalAlignment(SwingConstants.CENTER);
 		lblEnterUsername.setBounds(93, 87, 134, 16);
 		contentPane.add(lblEnterUsername);
+	}
+	
+	public void actionlogin(){
+		btnLogin.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent event){
+				String userName = textFieldUsername.getText();
+				String password = passwordFieldPassword.getText();
+				loginObject.setAuthUsername(userName);
+				loginObject.setAuthPassword(password);
+				loginObject.setIsAdmin(false);
+				Gson gson = new Gson();
+				String jsonOut = gson.toJson(loginObject);
+				try {
+					jsonIn = connectionsSocket.connectToServerAndSendReturnObject(jsonOut);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				loginReturnObject = gson.fromJson(jsonIn, LogInReturnObject.class);
+				
+			}
+		});
 	}
 }
