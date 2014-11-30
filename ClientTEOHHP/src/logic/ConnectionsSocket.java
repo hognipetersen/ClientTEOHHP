@@ -8,21 +8,28 @@ import shared.Encryption;
 
 public class ConnectionsSocket {
 	
-	private Socket connection;
+	private Socket connectionClient;
 	private String jsonIn;
 	private byte[] byteArrayIn = new byte[500000];
 	private byte[] byteArrayOut = new byte[500000];
 	
 	private Encryption encryptionObject = new Encryption(); 
 	
-	public String connectToServerAndSendObject(String jsonOut) throws IOException{
+	public String connectToServerAndSendReturnObject(String jsonOut) throws IOException{
 		System.out.println("Attempting connection...");
-		connection = new Socket(InetAddress.getByName("localhost"), 8349);
-		System.out.println("Connected to "+connection.getInetAddress().getHostAddress());
+		connectionClient = new Socket(InetAddress.getByName("localhost"), 8349);
+		System.out.println("Connected to "+connectionClient.getInetAddress().getHostAddress());
 		byteArrayOut = encryptionObject.encrypt(jsonOut);
-		connection.getOutputStream().write(byteArrayOut);
-		connection.getInputStream().read(byteArrayIn);
+		connectionClient.getOutputStream().write(byteArrayOut);
+		//efter ovenforstående venter klienten på svar, og det skulle gerne
+		//komme i form af et bytearray fra serveren, som håndteres nedenfor:
+		connectionClient.getInputStream().read(byteArrayIn);
+		//i ovenforstående linje læser getInputStrem().read det indkommende
+		//bytearray og gemmer det i variablen connectionClient. Sidenhen bliver
+		//variablen brugt til at sende til decrypt metoden i Encryption klassen
+		//som dekrypterer den og gemmer den i en String i form af json.
 		jsonIn = encryptionObject.decrypt(byteArrayIn);
+		//metoden returnerer til sidst en String i form af json.
 		return jsonIn;
 	}
 

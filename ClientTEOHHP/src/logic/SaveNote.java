@@ -5,18 +5,23 @@ import java.io.*;
 import javax.swing.JOptionPane;
 
 import shared.Encryption;
+import shared.GetNoteObject;
 import shared.SaveNoteObject;
+import shared.SaveNoteReturnObject;
 
 import com.google.gson.*;
 
 public class SaveNote implements Serializable{
 	private static final long serialVersionUID = -8026572303276942230L;
-	ConnectionsSocket connectionsSocket = new ConnectionsSocket();
 	
-	SaveNoteObject saveNoteObject = new SaveNoteObject();
-	Encryption encryptedSaveNoteObject = new Encryption();
-	Gson gson = new Gson();
-	String json;
+	private String jsonIn;
+	private String jsonOut;
+	
+	private ConnectionsSocket connectionsSocket = new ConnectionsSocket();
+	private SaveNoteObject saveNoteObject = new SaveNoteObject();
+	private Gson gson = new Gson();
+	private SaveNoteReturnObject saveNoteReturnObject = new SaveNoteReturnObject(); 
+
 	
 	public void setUserEmailFromGUI(){
 		saveNoteObject.setUserEmail(JOptionPane.showInputDialog("Enter user email:"));
@@ -37,11 +42,13 @@ public class SaveNote implements Serializable{
 	}
 	
 	public void javaToJson(){
-		json = gson.toJson(saveNoteObject);
-		System.out.println(json);
+		jsonOut = gson.toJson(saveNoteObject);
+		System.out.println(jsonOut);
 	}
 	
 	public void serverCommunication() throws IOException{
-		connectionsSocket.connectToServerAndSendObject(json);
+		jsonIn = connectionsSocket.connectToServerAndSendReturnObject(jsonOut);
+		saveNoteReturnObject = gson.fromJson(jsonIn, SaveNoteReturnObject.class);
+		System.out.println(saveNoteReturnObject.getMessage());
 	}
 }
