@@ -5,7 +5,7 @@ import java.io.IOException;
 public class ClientTEOHHPTest {
 	
 	public static void main(String[] args) throws IOException{
-		SaveNoteLogic saveNoteLogicObject = new SaveNoteLogic();
+		SaveNote saveNoteLogicObject = new SaveNote();
 		saveNoteLogicObject.setUserEmailFromGUI();
 		saveNoteLogicObject.setNoteContentFromGUI();
 		saveNoteLogicObject.setEventNameFromGUI();

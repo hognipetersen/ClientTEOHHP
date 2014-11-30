@@ -9,7 +9,7 @@ import shared.SaveNoteObject;
 
 import com.google.gson.*;
 
-public class SaveNoteLogic implements Serializable{
+public class SaveNote implements Serializable{
 	private static final long serialVersionUID = -8026572303276942230L;
 	ConnectionsSocket connectionsSocket = new ConnectionsSocket();
 	
