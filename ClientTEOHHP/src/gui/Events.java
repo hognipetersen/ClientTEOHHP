@@ -7,8 +7,9 @@ import com.google.gson.JsonSyntaxException;
 
 import shared.GetCalendarObject;
 import shared.GetCalendarReturnObject;
+import shared.Event;
 
-import java.awt.*;
+import java.awt.Color;
 import java.awt.event.*;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,11 +18,11 @@ import logic.ConnectionsSocket;
 
 public class Events extends JFrame {
 
+	private static final long serialVersionUID = 7969840748445826584L;
 	private JPanel contentPane;
-	JButton addNote = new JButton("Add Note");
 	JTextField username = new JTextField("Enter your username");
-	JButton showCalendars = new JButton("Show calendars");
-	JTextArea list = new JTextArea();
+	JButton showCalendars = new JButton("Show events");
+	JTextArea calendarList = new JTextArea();
 	private final JScrollPane scrollPane_1 = new JScrollPane();
 
 	public Events() {
@@ -36,13 +37,10 @@ public class Events extends JFrame {
 		scrollPane_1.setBounds(0, 85, 320, 270);
 		contentPane.add(scrollPane_1);
 		
-		addNote.setBounds(96, 438, 124, 47);
-		contentPane.add(addNote);
-		
-		username.setBounds(0, 37, 198, 30);
+		username.setBounds(0, 21, 198, 30);
 		contentPane.add(username);
 		
-		showCalendars.setBounds(190, 38, 124, 30);
+		showCalendars.setBounds(3, 53, 192, 20);
 		contentPane.add(showCalendars);
 
 		JPanel panelStatusBarPlaceholder = new JPanel();
@@ -63,10 +61,10 @@ public class Events extends JFrame {
 		contentPane.add(btnBack);
 		
 		JTextArea textAreaEventList = new JTextArea();
-		textAreaEventList.setBounds(0, 70, 320, 300);
+		textAreaEventList.setBounds(0, 80, 320, 300);
 		contentPane.add(textAreaEventList);
 
-		scrollPane_1.setViewportView(list);
+		scrollPane_1.setViewportView(calendarList);
 		showCalendars.addActionListener(new ActionShowCalendars());
 		btnCreate.addActionListener(new ActionCreateEvent());
 		btnDelete.addActionListener(new ActionDeleteEvent());
@@ -77,10 +75,10 @@ public class Events extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			GetCalendarObject getCalendarObject = new GetCalendarObject();
-			getCalendarObject.setUserID(username.getText());
+			GetCalendarObject getcaelendarobject = new GetCalendarObject();
+			getcaelendarobject.setUserID(username.getText());
 			Gson gson = new Gson();
-			String jsonString = gson.toJson(getCalendarObject);
+			String jsonString = gson.toJson(getcaelendarobject);
 			ConnectionsSocket connectionsSocket = new ConnectionsSocket();
 			GetCalendarReturnObject calendarreturnobject = new GetCalendarReturnObject();
 			try {
@@ -94,12 +92,13 @@ public class Events extends JFrame {
 			String calendars = "";
 			for(ArrayList<Event> i: calendarreturnobject.getCalendars()){
 				for(Event x: i){
-					calendars = calendars.concat(x.getDescription());
+					calendars = calendars.concat(x.getTitle());
 					calendars = calendars.concat("\n");
 				}
 			}
 			
-			list.setText(calendars);
+			calendarList.setText(calendars);
+			calendarList.setEditable(false);
 		}
 		
 	}

@@ -50,9 +50,14 @@ public class QOTD extends JFrame {
 		btnBack.setBounds(276, 21, 44, 44);
 		contentPane.add(btnBack);
 
-		author.setBounds(270, 277, 44, 44);
-		subject.setBounds(10, 277, 44, 44);
-		quote.setBounds(0, 240, 320, 25);
+		author.setBounds(164, 277, 156, 44);
+		author.setEditable(false);
+		subject.setBounds(6, 277, 154, 44);
+		subject.setEditable(false);
+		quote.setBounds(6, 77, 308, 188);
+		quote.setWrapStyleWord(true);
+		quote.setLineWrap(true);
+		quote.setEditable(false);
 
 		btnBack.addActionListener(new ActionBack());
 		contentPane.add(author);

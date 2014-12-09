@@ -36,7 +36,7 @@ public class MainMenu extends JFrame {
 		contentPane.add(btnCalendars);
 
 		JButton btnLogout = new JButton("Logout");
-		btnLogout.setBounds(276, 21, 44, 44);
+		btnLogout.setBounds(264, 21, 56, 44);
 		contentPane.add(btnLogout);
 
 		JButton btnEvents = new JButton("Events");

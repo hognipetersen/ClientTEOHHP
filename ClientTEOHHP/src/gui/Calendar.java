@@ -18,7 +18,7 @@ public class Calendar extends JFrame {
 	 */
 	public Calendar() {
 		super("Calendar");
-		setDefaultCloseOperation(onClose());
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 320, 568);
 		contentPane = new JPanel();
 		
@@ -83,8 +83,4 @@ public class Calendar extends JFrame {
 		}
 	}
 	
-		public int onClose(){
-		setVisible(false);
-		return 1;
-	}
 }
